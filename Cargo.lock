@@ -189,6 +189,7 @@ dependencies = [
  "anyhow",
  "candle-core",
  "candle-transformers",
+ "clap",
  "hf-hub",
  "tokenizers",
 ]

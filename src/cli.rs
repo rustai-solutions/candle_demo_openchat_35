@@ -1,5 +1,6 @@
 #![allow(unused)]
 
+use clap::{Parser, ValueEnum};
 use std::fs::File;
 use std::io::Write;
 use std::path::PathBuf;
@@ -16,14 +17,24 @@ use anyhow::Result;
 mod token_output_stream;
 use token_output_stream::TokenOutputStream;
 
+#[derive(Parser, Debug)]
+#[command(author, version, about, long_about = None)]
 struct Args {
+    #[arg(long, default_value = "../hf_hub/openchat_3.5_tokenizer.json")]
     tokenizer: String,
+    #[arg(long, default_value = "../hf_hub/openchat_3.5.Q8_0.gguf")]
     model: String,
+    #[arg(short = 'n', long, default_value_t = 1000)]
     sample_len: usize,
+    #[arg(long, default_value_t = 0.8)]
     temperature: f64,
+    #[arg(long, default_value_t = 299792458)]
     seed: u64,
+    #[arg(long, default_value_t = 1.1)]
     repeat_penalty: f32,
+    #[arg(long, default_value_t = 64)]
     repeat_last_n: usize,
+    #[arg(long, default_value_t = 8)]
     gqa: usize,
 }
 
@@ -47,16 +58,7 @@ fn main() -> anyhow::Result<()> {
         utils::with_f16c()
     );
 
-    let args = Args {
-        tokenizer: String::from("../hf_hub/openchat_3.5_tokenizer.json"),
-        model: String::from("../hf_hub/openchat_3.5.Q8_0.gguf"),
-        sample_len: 1000,
-        temperature: 0.8,
-        seed: 299792458,
-        repeat_penalty: 1.1,
-        repeat_last_n: 64,
-        gqa: 8,
-    };
+    let args = Args::parse();
 
     // load model
     let model_path = args.model()?;

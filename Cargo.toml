@@ -9,6 +9,7 @@ edition = "2021"
 anyhow = "1.0.75"
 candle-core = { version = "0.3.1" }
 candle-transformers = "0.3.1"
+clap = "4.4.10"
 hf-hub = "0.3.2"
 tokenizers = "0.15.0"
 
