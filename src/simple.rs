@@ -96,7 +96,7 @@ fn main() -> anyhow::Result<()> {
             }
         }
         let prompt_str = format!("User: {prompt} <|end_of_turn|> Assistant: ");
-        // print!("{}", &prompt_str);
+        print!("bot: ");
 
         let tokens = tos
             .tokenizer()
